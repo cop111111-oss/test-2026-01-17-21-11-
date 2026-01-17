@@ -37,22 +37,27 @@
             color-scheme: dark;
         }
         
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #0d1b3e; /* 기본 군청색 */
-            color: #ffffff;
+        html, body {
+            height: 100%;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
-            min-height: 100vh;
+            background-color: #0d1b3e; /* 깊은 군청색 베이스 */
         }
 
-        /* [Layer 1] 최하단: 오로라 및 그라데이션 배경 */
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* [Layer -1] 배경 레이어: 콘텐츠 뒤에 확실히 위치 */
         .abstract-bg {
             position: fixed;
             inset: 0;
-            z-index: -10; /* 가장 뒤로 보냄 */
-            pointer-events: none;
+            z-index: -10; /* 가장 아래에 배치 */
+            pointer-events: none; /* 클릭 이벤트 방해 방지 */
             background: radial-gradient(circle at 0% 0%, #1e3a8a 0%, #0d1b3e 50%, #020617 100%);
             overflow: hidden;
         }
@@ -62,52 +67,54 @@
             width: 70vmax;
             height: 70vmax;
             filter: blur(100px);
-            opacity: 0.5;
+            opacity: 0.4;
         }
 
         .blob-purple {
-            background: radial-gradient(circle at center, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
+            background: radial-gradient(circle at center, rgba(168, 85, 247, 0.25) 0%, transparent 70%);
             top: -10%;
             left: -5%;
             animation: move-purple 20s infinite alternate ease-in-out;
         }
 
         .blob-emerald {
-            background: radial-gradient(circle at center, rgba(16, 185, 129, 0.25) 0%, transparent 70%);
+            background: radial-gradient(circle at center, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
             bottom: -15%;
             right: -5%;
             animation: move-emerald 25s infinite alternate-reverse ease-in-out;
         }
 
         @keyframes move-purple {
-            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            100% { transform: translate(15%, 10%) scale(1.1) rotate(10deg); }
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(15%, 10%) scale(1.1); }
         }
 
         @keyframes move-emerald {
-            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            100% { transform: translate(-10%, -15%) scale(1.15) rotate(-10deg); }
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-10%, -15%) scale(1.1); }
         }
 
-        /* [Layer 2] 중간: 질감 및 그리드 */
+        /* [Layer 0] 중간 질감 레이어 */
         .overlay-layer {
             position: fixed;
             inset: 0;
-            z-index: -5; /* 배경보다는 위, 콘텐츠보다는 뒤 */
+            z-index: -5;
             pointer-events: none;
-            opacity: 0.05;
+            opacity: 0.03;
             background-image: 
                 linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background-size: 60px 60px;
         }
 
-        /* [Layer 3] 최상단: 리액트 앱 콘텐츠 영역 */
+        /* [Layer 10] 최상단 콘텐츠 레이어 */
         #root {
             position: relative;
-            z-index: 10; /* 모든 배경보다 높은 순위 */
-            isolation: isolate; /* 새로운 쌓임 맥락 형성 */
+            z-index: 10; /* 배경보다 높은 숫자로 설정 */
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: transparent; /* 배경이 비치도록 설정 */
         }
 
         ::-webkit-scrollbar {
@@ -133,14 +140,17 @@
     </script>
 </head>
 <body>
-    <!-- 배경 레이어들을 명확히 분리하여 하단에 배치 -->
+    <!-- 배경 요소를 콘텐츠 바깥에 독립적으로 배치 -->
     <div class="abstract-bg">
         <div class="blob blob-purple"></div>
         <div class="blob blob-emerald"></div>
     </div>
     <div class="overlay-layer"></div>
     
-    <!-- 콘텐츠 레이어 -->
+    <!-- 리액트 앱이 실행될 콘텐츠 영역 -->
     <div id="root"></div>
+
+    <!-- 엔트리 스크립트 명시 (중요: 배포 시 자바스크립트 로드를 보장합니다) -->
+    <script type="module" src="index.tsx"></script>
 </body>
 </html>
