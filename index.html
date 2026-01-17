@@ -39,7 +39,7 @@
         
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background-color: #080a12; /* 깊은 옵시디언 네이비 */
+            background-color: #0d1b3e; /* 깊고 선명한 군청색(Deep Ultramarine) */
             color: #ffffff;
             overflow-x: hidden;
             margin: 0;
@@ -55,56 +55,57 @@
             z-index: -2;
             overflow: hidden;
             pointer-events: none;
-            background: radial-gradient(circle at 0% 0%, #0c1120 0%, #05060a 100%);
+            /* 군청색에서 더 어두운 네이비로 흐르는 그라데이션 */
+            background: radial-gradient(circle at 0% 0%, #1e3a8a 0%, #0d1b3e 50%, #020617 100%);
         }
 
-        /* 메쉬 그리드 패턴 - 엔지니어링 느낌 */
+        /* 메쉬 그리드 패턴 - 세련된 엔지니어링 감각 */
         .abstract-bg::after {
             content: "";
             position: absolute;
             inset: 0;
             background-image: 
-                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(circle at center, black, transparent 80%);
+                linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at center, black, transparent 90%);
             z-index: -1;
         }
 
         .blob {
             position: absolute;
-            width: 80vmax;
-            height: 80vmax;
-            filter: blur(120px);
-            opacity: 0.5;
+            width: 70vmax;
+            height: 70vmax;
+            filter: blur(100px);
+            opacity: 0.6;
             z-index: -2;
         }
 
         .blob-purple {
-            background: radial-gradient(circle at center, rgba(168, 85, 247, 0.25) 0%, transparent 70%);
-            top: -20%;
-            left: -10%;
-            animation: move-purple 25s infinite alternate ease-in-out;
+            background: radial-gradient(circle at center, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
+            top: -10%;
+            left: -5%;
+            animation: move-purple 20s infinite alternate ease-in-out;
         }
 
         .blob-emerald {
-            background: radial-gradient(circle at center, rgba(16, 185, 129, 0.18) 0%, transparent 70%);
-            bottom: -20%;
-            right: -10%;
-            animation: move-emerald 30s infinite alternate-reverse ease-in-out;
+            background: radial-gradient(circle at center, rgba(16, 185, 129, 0.25) 0%, transparent 70%);
+            bottom: -15%;
+            right: -5%;
+            animation: move-emerald 25s infinite alternate-reverse ease-in-out;
         }
 
         @keyframes move-purple {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(10%, 15%) scale(1.1); }
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            100% { transform: translate(15%, 10%) scale(1.1) rotate(10deg); }
         }
 
         @keyframes move-emerald {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(-15%, -10%) scale(1.2); }
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            100% { transform: translate(-10%, -15%) scale(1.15) rotate(-10deg); }
         }
 
-        /* 질감 오버레이 */
+        /* 미세한 입자 질감 */
         .noise {
             position: fixed;
             top: 0;
@@ -112,7 +113,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.03;
+            opacity: 0.04;
             pointer-events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
@@ -123,14 +124,15 @@
         }
 
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #080a12;
+            background: #0d1b3e;
         }
         ::-webkit-scrollbar-thumb {
             background: #10b981;
             border-radius: 10px;
+            border: 2px solid #0d1b3e;
         }
     </style>
 <script type="importmap">
@@ -148,7 +150,8 @@
     <div class="abstract-bg">
         <div class="blob blob-purple"></div>
         <div class="blob blob-emerald"></div>
-        <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, #080a12 95%);"></div>
+        <!-- 군청색 깊이감을 더해주는 하단 그림자 -->
+        <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, rgba(13, 27, 62, 0.8) 100%);"></div>
     </div>
     <div class="noise"></div>
     <div id="root"></div>
